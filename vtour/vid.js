@@ -60,20 +60,21 @@ var krpanoplugin = function () {
 		// video.muted = true;
 		// internal: provide access to the video object for usage as WebGL texture
 		plugin.videoDOM = video;
-
 		function video_end() {
-			console.log("video ended");
-			var vrObject = krpano.get("webvr");
-			// fadeOut();
-			if (vrObject.isavailable == true && vrObject.isavailable == true) {
-				krpano.call("removeplugin(plugin[video]);");
-				krpano.call("webvr.exitVR();");
-				krpano.call("removeplugin(plugin[video]);");
-				setTimeout(loadProperty, 500)
-			} else {
-				krpano.call("removeplugin(plugin[video]);");
-				loadProperty();
-			}
+			// console.log("video ended");
+			// var vrObject = krpano.get("webvr");
+			// // fadeOut();
+			// if (vrObject.isavailable == true && vrObject.isavailable == true) {
+			// 	krpano.call("startup();");
+			// 	krpano.call("webvr.exitVR();");
+			// 	setTimeout(loadProperty, 500)
+			// } else {
+			// 	//krpano.call("removeplugin(plugin[video]);");
+			// 	loadProperty();
+			// }
+			krpano.call("set(skin_settings.thumbs,true)");
+			krpano.call("set(vrmenu.menualpha,50)");
+			krpano.call("startup();");
 			document.body.style.opacity = 1;
 			// fadeIn();
 		}
@@ -85,7 +86,15 @@ var krpanoplugin = function () {
 		// trace some debug info to the log
 		krpano.debugmode = false;	// show debug/trace(0) messages
 		//krpano.trace(0, "basic videoplayer plugin - video.src=" + video.src);
+		krpano.call("set(skin_settings.thumbs,false)");
+		krpano.call("set(vrmenu.menualpha,0)");
+		console.log(krpano.get("layer[skin_btn_prev].alpha"));
+		krpano.set("layer[skin_btn_prev].alpha", "0");
+		krpano.set("layer[skin_btn_next].alpha", "0");
 
+		console.log(krpano.get("layer[skin_btn_prev].alpha"));
+
+		// krpano.call("set(layer[skin_btn_prev_fs].visible, false)");
 		video.play();
 		if (device.mobile || device.tablet) {
 			// show touch-required warning
@@ -97,9 +106,6 @@ var krpanoplugin = function () {
 		}
 	}
 
-	function loadProperty() {
-		embedpano({ swf: "tour.swf", xml: "tour.xml", target: "pano", html5: "auto", mobilescale: 1.0, passQueryParameters: true });
-	}
 	local.unloadplugin = function () {
 		if (video) {
 			// just pause the video (because real unloading is not possible)
