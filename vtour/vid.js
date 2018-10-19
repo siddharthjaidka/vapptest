@@ -66,9 +66,12 @@ var krpanoplugin = function () {
 			var vrObject = krpano.get("webvr");
 			// fadeOut();
 			if (vrObject.isavailable == true && vrObject.isavailable == true) {
+				krpano.call("removeplugin(plugin[video]);");
 				krpano.call("webvr.exitVR();");
+				krpano.call("removeplugin(plugin[video]);");
 				setTimeout(loadProperty, 500)
 			} else {
+				krpano.call("removeplugin(plugin[video]);");
 				loadProperty();
 			}
 			document.body.style.opacity = 1;
